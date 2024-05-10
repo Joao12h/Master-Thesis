@@ -11,9 +11,11 @@ property_under_study=sys.argv[1]
 
 #auxiliary functions
 
+# flatten_comprehension receives a list of lists and converts it into a single array
 def flatten_comprehension(matrix):
         return [item for row in matrix for item in row]
 
+# graph_with_atributes function will be used to incorporate the behavioral data retrieved from ARTNet study into the obtained networks with the provided degree distribution
 def graph_with_atributes(graph,agents):
     for nodes in graph.nodes():
             #print(nodes)
