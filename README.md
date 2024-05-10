@@ -1,2 +1,4 @@
 # Master-Thesis
 
+This repository presents the main code developed to generate the networks obtained by the Havel-Hakimi algorithm, by uniform sampling using a Monte Carlo Markov Chain approach and from enhancing the clustering, assortativity by degree, age, and race coefficients (network_generation.py). In addition, we also present how the largest component, the number of disconnected components, the modularity, the average diameter and the average shortest path length were computed for each network as we enhanced the properties under study (metrics_computation.py). The community structure of the networks with the highest enhanced properties was also characterized (community_structure.py). Finally, we present the implementation of the epidemic stochastic simulation, assuming that the nodes states are updated synchronously, and including all the associated auxiliary functions (synchronous_epidemics.py). 
+
