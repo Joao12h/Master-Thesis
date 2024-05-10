@@ -85,7 +85,7 @@ def double_edge_swap(initial_graph, nswap=1, max_tries=100, seed=None):
 
     return G,candidate_edges,edges_proposed
 
-
+#comb_lists_different_neighbours gets edge_lists of the neighbours of two different nodes that are not connected to each other. It will be useful to increase the clustering coefficient and maximize number of triangles formed per iteration
 def comb_lists_different_neighbours(neighbourhood1, neighbourhood2):
     set_neighbourhood1 = set(neighbourhood1)
     set_neighbourhood2 = set(neighbourhood2)
