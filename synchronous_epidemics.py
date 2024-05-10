@@ -53,7 +53,9 @@ def initial_state(graph_with_atributes_test, largest_component, atribute):
 
     return initial_state_vector
 
-#get_high_degree_centrality_nodes
+#get_high_degree_centrality_nodes will receive as an input the largest component of a given network, the number of nodes to be selected to initiate PrEP and the state vector regarding HIV status.
+# the number of nodes to be selected will depend on the PrEP coverage considered such that, in this case, we will give priority to nodes that present the highest degree centrality
+#since individuals who start PrEP need to be HIV-negative, we only target susceptible individuals in the beginning of the simulation
 
 def get_high_degree_centrality_nodes(graph,number_of_nodes_to_be_selected,current_state_vector):
     # Calculate degree centrality for each node
@@ -85,7 +87,7 @@ def find_nodes(h, it):
             set1.append(i)
     return set1
 
-
+#get_k_shell_decomposition will perform k-shell decomposition to a given graph
 def get_k_shell_decomposition(graph):
     # Copy the graph
     h = graph.copy()
@@ -110,6 +112,9 @@ def get_k_shell_decomposition(graph):
             break
     return buckets
 
+#get_k_inner_shell_nodes will receive a list of sublists containing nodes that belong to the same k-shell. The higher the sublist index,
+#the higher the node's influence in the network. For a given level of PrEP coverage, nodes that belongs to higher k-index shells will be targetted
+#first to initiate PrEP.
 def get_k_inner_shell_nodes(bucket_list,number_of_nodes_to_be_selected,current_state_vector):
     i=len(bucket_list)-1
     inner_nodes=[]
@@ -124,6 +129,10 @@ def get_k_inner_shell_nodes(bucket_list,number_of_nodes_to_be_selected,current_s
         #print('i:',i)
     return inner_nodes 
 
+#increase_neighbours_rejection_sampling_with_state_vector will receive a state vector with the infectious state of each node, the list of infected neighbours per susceptible and the current graph.
+#When a node becomes infected, We will remove the infected neighbor's list of the respective node from current_infected_neighbours_per_node_udpated. After,
+#we will add the infected node to the neighbor's list of any susceptible in the current state he contacts with.
+
 def increase_neighbours_rejection_sampling_with_state_vector(current_infected_neighbours_per_node_udpated, infected_node,state_vector,current_graph):
     current_infected_neighbours_per_node_udpated[infected_node-1].clear()
     neighbours_of_infected_node=list(current_graph[infected_node])
@@ -135,6 +144,8 @@ def increase_neighbours_rejection_sampling_with_state_vector(current_infected_ne
     
     return current_infected_neighbours_per_node_udpated
 
+#reduce_infected_neighbours_rejection_sampling will be used when an infected gets tested and initiates treatments. Since when on ART,
+#we assume the individual is not infectious anymore, we will remove it from the infected nodes list of the susceptible node he contacts with.
 def reduce_infected_neighbours_rejection_sampling(current_infected_neighbours,recovered_node):
     for nodes in range(0,len(current_infected_neighbours)):
         if recovered_node in current_infected_neighbours[nodes]:
